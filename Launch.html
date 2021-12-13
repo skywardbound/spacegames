@@ -2,212 +2,156 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title> Logging In... </title>
-<link rel="shortcut icon" href="SpaceGamesIntro.gif" type="image/x-icon" />
-<link rel="stylesheet" href="style.css" type="text/css"> 
+<title> Ulysses </title>
+<link href="style.css" rel="stylesheet"> 
+<script src="https://threejs.org/build/three.min.js"></script>
+<script src="https://threejs.org/examples/js/libs/tween.min.js"></script>
+<script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-<!-- Welcome To The Developers Release of Space Games -->
-<!-- For Legal Notices View Our Terms, Conditions, And Legal Notices --> 
-<body onLoad="LogIn()">
-<!-- Images -->
 
-<!-- Home Page Images --> 
-<img id="UlyssesGameArtwork" src="UlyssesGameArtwork.jpg" width="500px" height="300px" alt="Hmmm... An error occured" onClick="LaunchUlyssesGame()">
-	
-	
+<body onLoad="Loaded()" onkeydown="KeyDown()">
+<img id="LoadingScreen" src="UlyssesGameArtwork.jpg" width="400px" height="400px" alt="error"> 
+<img id="ChunkOne" src="ChunkOne.gif" height="400px" alt="error"> 
+<img id="ChunkTwo" src="ChunckTwo.gif" height="400px" alt="error"> 
 
-<img id="SGI" src="SpaceGamesIntro.gif" width="250px" height="220px" alt="Hmmm... An error occured"> 
-	
-<img id="LBG" src="LauncherBackground.jpg" width="1720px" height="1080px" alt="Hmmm... An error occured"> 
-	
-<img id="UGL" src="UlyssesGameLogo.gif" width="300px" height="500px" alt="Hmmm... An error occured" onClick="LaunchUlyssesGame()">
-	
-<img id="UlyssesGameIcon" src="UlyssesGameLogo.jpg" width="500px" height="300px" alt="Hmmm... An error occured" onClick="LaunchUlyssesGame()">
-	
-<img id="AdvancedMenu" src="AdvancedMenu.png" width="500px" height="300px" alt="Hmmm... An error occured" onClick="LaunchUlyssesGame()">
-	
+<img id="ChunkFive" src="ChunkFive.gif" height="400px" alt="error"> 
 
+<img id="Player2" src="P2WL.gif" alt="error"> 
 
 	
-<!-- Navigation -->
-<div id="Navigation"> 		
-</div>
-
-	
-<!-- Buttons --> 
-<button id="UlyssesGameLearnMoreButton"> Learn More </button>
-
-	
-<!-- Text --> 
-<p id="UlyssesAnnouncement"> The Adventures Of Ulysses Is Now Availble </p>
-	
-<!-- Random Guy That Floats Around Lol --> 
-<img id="RandomFloatingGuy" src="P2WL.gif" width="500px" height="300px" alt="Hmmm... An error occured" onClick="LaunchUlyssesGame()">
-	
-<p id="WelcomeMessage"> Welcome </p>
+<p id="LoadingText"> Loading </p>
+<p id="GameName"> Ulysses <br> v 1.000 </p>
+<button id="StartButton" onClick="StartGame()"> Start </button>
 	
 <script> 
-//Login Function
-//Only Triggers If You Are Not Logged In
-var BackgroundBlur = 0;
-var FullScreen = document.documentElement; 
-function LogIn() {
-var LoggedIn = localStorage.getItem("loggedin")
-if (LoggedIn === "true") {
-LoggedOn(); 
-}
-else {
-swal({
- title: "Login", 
-  content: {
-    element: "input",
-    attributes: {
-      placeholder: "Username..."
-    },
-  },
-}).then((value) => {
-if (value === "dev111") {
-	swal({
- title: "Login", 
-  content: {
-    element: "input",
-    attributes: {
-      placeholder: "Password...",
-		type: "Password"
-    },
-  },
-}).then((value) => {
-if (value === "securelogin") {
-localStorage.setItem("loggedin", "true"); 
-LoggedOn(); 
-}
-		else {
-swal({
-  title: "Inncorrect Password",
-  text: "Try Again In 5 Seconds",
-  icon: "error", 
-  timer: 4700
-}); 
-setTimeout(LogIn, 5000); 	
-		}
-
-	})} 
-else {
-swal({
-  title: "Inncorrect Username",
-  text: "Try Again In 3 Seconds",
-  icon: "error", 
-  timer: 2700
-}); 
-setTimeout(LogIn, 3000); 	
-	}}
-)}}; 
-function LoggedOn() { 
-swal({
-  title: "Logged In!",
-  text: "Successfully Logged You In!",
-  icon: "success",
-  button: "Go!"
-}).then((value) => {
-FullScreen.requestFullscreen(); 
-LoadLauncher(); 
-});
-} 
+var LT = document.getElementById("LoadingText"); 
 	
 
-function LoadLauncher() {
-document.title = "Welcome"; 
-setTimeout(function(){setInterval(FullScreenCheck, 1);}, 1000); 
-$("#SGI").fadeIn(1);
-$("#SGI").fadeOut(500);
-$("#LBG").fadeIn(2000);
-$("#UGL").fadeIn(2000);
-$("#Navigation").fadeIn(2000);
-$("#UlyssesGameArtwork").fadeIn(2000);
-$("#UlyssesGameIcon").fadeIn(2000);
-$("#UlyssesGameLearnMoreButton").fadeIn(2000);
-$("#RandomFloatingGuy").fadeIn(2000);
-$("#WelcomeMessage").fadeIn(3000); 
-$("#WelcomeMessage").fadeOut(3000);
-$("#WelcomeMessage").fadeIn(6001);
-setTimeout(function(){setInterval(Timer, 1);}, 6000); 
-$("#AdvancedMenu").fadeIn(2000);
-	
-setInterval(backgroundfadeout, 1); 
+setInterval(LoadingText, 4000); 
+LoadingText();
+function LoadingText() {
+	setTimeout(function(){LT.innerHTML = "Loading"}, 1000);
+	setTimeout(function(){LT.innerHTML = "Loading."}, 2000);
+	setTimeout(function(){LT.innerHTML = "Loading.."}, 3000);
+	setTimeout(function(){LT.innerHTML = "Loading..."}, 4000);
 }
-function backgroundfadeout() {
-        if (BackgroundBlur < 10) {
-            BackgroundBlur = BackgroundBlur + 0.10;
-                } 
-        var Background = document.getElementById("LBG"); 
-        Background.style.filter = "blur(" + BackgroundBlur + "px)"; 
-    }
-	
-	
-function LaunchUlyssesGame() {
-swal({
-  title: "Hang On Tight!",
-  text: "We're processing your request!",
-  icon: "success",
-  button: "Got It!",
-  timer: 3000
-})
+function Loaded() {
+	$("#LoadingText").fadeOut(1000); 
+	$("#GameName").fadeIn(2000); 
+	$("#StartButton").fadeIn(2000); 
+	$("#LoadingScreen").fadeIn(2000); 
 }
-	
- 
+function StartGame() {
+	$("#StartButton").animate({top: "300%"}); 
+	$("#StartButton").fadeOut(1); 
+	$("#GameName").animate({top: "150%"}); 
+	$("#GameName").fadeOut(1); 
+	$("#LoadingScreen").animate({top: "150%"}); 
+	$("#LoadingScreen").fadeOut(1); 
+	$("#ChunkOne").fadeIn(1000); 
+	$("#ChunkTwo").fadeIn(1000); 
+	$("#Player2").fadeIn(1000); 
+	InitializeThreeJs();
+}
 
-function Timer() {
-var TimeHours = new Date(); 
-var Hours = TimeHours.getHours(); 
-var TimeMinutes = new Date(); 
-var Minutes = TimeMinutes.getMinutes(); 
-if (Hours > 12) {
-     Hours = Hours - 12; 
+function InitializeThreeJs() {
+scene = new THREE.Scene(); 
+scene.background = new THREE.TextureLoader().load("ChunkFive.gif")
+ camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 45, 30000); 
+  camera.position.set(0,-1000, 20000); 
+   renderer = new THREE.WebGLRenderer({ antialias: true }); 
+    renderer.setSize(window.innerWidth, window.innerHeight); 
+	 document.body.appendChild(renderer.domElement); 
+      renderer.domElement.id = "canvas"; 
+	   AddDice(); 	
+	    Animate(); 
 }
-if (Minutes > 9) {
-document.getElementById("WelcomeMessage").innerHTML = Hours + ":" + Minutes; 
-}
-else {
-document.getElementById("WelcomeMessage").innerHTML = Hours + ":" + "0" + Minutes;	 } }
 
-function FullScreenCheck() {
-	if( window.innerHeight == screen.height) {
-    document.getElementById("LBG").style.zIndex = "1"; 
+function AddDice() {
+dicematerial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}) 
+]; 
+material = new THREE.MeshFaceMaterial(dicematerial);  
+dicegeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+diceone = new THREE.Mesh(dicegeometry, material); 
+scene.add(diceone); 
+
+
+dicematerial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}) 
+]; 
+material2 = new THREE.MeshFaceMaterial(dicematerial2);  
+dicegeometry2 = new THREE.BoxGeometry(4000, 4000, 4000); 
+dicetwo = new THREE.Mesh(dicegeometry2, material2); 
+scene.add(dicetwo); 
+diceone.position.set(-4000,6000, 0);
+dicetwo.position.set(4000,6000, 0);
 }
+	
+function Animate() {
+renderer.render(scene, camera); 
+ diceone.rotation.x += 0.2; 
+  diceone.rotation.y += 0.2;
+  dicetwo.rotation.x += 0.2; 
+  dicetwo.rotation.y += 0.2;
+   requestAnimationFrame(Animate); 
+}
+
+function KeyDown() {
+if (AnimateDice) {
+diceone.position.set(-4000, AnimateUp, 0); 
+dicetwo.position.set(4000, AnimateUp, 0); 
+AnimateUp = AnimateUp + 300; 
+		if (AnimateUp > 15000) {
+			AnimateDice = false; 
+			scene.remove(diceone); 
+			scene.remove(dicetwo); 
+			DiceRoll(); 
+	}
 	else {
-		document.getElementById("LBG").style.zIndex = "7"; 
-		if (CurrentAlert) {
-			CurrentAlert = false; 
-		swal({
-  title: "Quit Space Games Launcher?",
-  text: "Are You Sure You Want To Leave?",
-  icon: "warning",
-  closeOnEsc: false,
-  closeOnClickOutside: false,
-  dangerMode: true,
-  buttons: true,
-  buttons: ["Go Back", "Quit"],
-}).then((value) => {
-			if (value) {
-swal({
-title: "All Done Here!",
-  text: "This Tab May Be Closed!",
-  icon: "success",
-  button: "Got It!",
-  timer: 1000
-});
-				document.getElementById("RandomFloatingGuy").style.zIndex = "8"; 
-			}
+		requestAnimationFrame(KeyDown);
+	}				
+}
+
+}
+function DiceRoll() {
+var DiceAmount = Math.floor(Math.random() * 11) + 2; 
+if (DiceAmount === 2) {
+DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+}
 else {
-	FullScreen.requestFullscreen(); 
-	setTimeout(function(){CurrentAlert = true;}, 1000); 
+	DiceRoll(); 
 }
-		}
-	)}}
 }
-var CurrentAlert = true; 		    
+AnimateDice = true; 
+AnimateUp = 6000; 
 </script>
 </body>
 </html>
